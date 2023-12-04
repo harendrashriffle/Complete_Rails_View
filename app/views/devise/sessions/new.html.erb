@@ -1,0 +1,181 @@
+<style>
+  @import url(https://fonts.googleapis.com/css?family=Raleway:700,800);
+
+html, body { margin: 0; }
+
+:focus { outline: none; }
+::-webkit-input-placeholder { color: #DEDFDF; }
+::-moz-placeholder { color: #DEDFDF; }
+:-moz-placeholder { color: #DEDFDF; }
+::-ms-input-placeholder { color: #DEDFDF; }
+
+body {
+
+<%#   background: #FAD5A5; %>
+<%#   background: url('./images/rajasthani.jpg'); %>
+  background-image:url("https://t4.ftcdn.net/jpg/02/44/69/87/240_F_244698725_uWdUNY1oiaHthwcb1NK6IqtPuRNKHor2.jpg");
+  background-size: 100%;
+
+  color: #fff;
+  font-family: 'Raleway', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/*#wrapper, label, #arrow, button span { transition: all .5s cubic-bezier(.6,0,.4,1); }
+
+#wrapper { overflow: hidden; }
+
+#signin:checked ~ #wrapper { height: 178px; }
+#signin:checked ~ #wrapper #arrow { left: 32px; }
+#signin:checked ~ button span { transform: translate3d(0,-72px,0); }
+
+#signup:checked ~ #wrapper { height: 262px; }
+#signup:checked ~ #wrapper #arrow { left: 137px; }
+#signup:checked ~ button span { transform: translate3d(0,-144px,0); }
+
+#reset:checked ~ #wrapper { height: 94px; }
+#reset:checked ~ #wrapper #arrow { left: 404px; }
+#reset:checked ~ button span { transform: translate3d(0,0,0); }*/
+
+form {
+  width: 300px;
+  height: 20px;
+  margin: -185px -225px;
+  position: absolute;
+  left: 75%;
+  top: 35%;
+}
+
+input[type=radio] { display: none; }
+
+label {
+  cursor: pointer;
+  display: inline-block;
+  font-size: 22px;
+  font-weight: 800;
+  opacity: .5;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+}
+label:hover {
+  transition: all .3s cubic-bezier(.6,0,.4,1);
+  opacity: 1;
+}
+/*label[for="signin"] { margin-right: 20px; }
+label[for="reset"] { float: right; }
+input[type=radio]:checked + label { opacity: 1; }*/
+
+input[type=text],
+input[type=email],
+input[type=password] {
+  background: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 27px;
+  font-family: 'Raleway', sans-serif;
+  height: 50px;
+  width: 99.5%;
+  margin-bottom: 10px;
+  opacity: 1;
+  text-indent: 20px;
+  transition: all .2s ease-in-out;
+  placeholder:#53625E;
+}
+
+input[type=submit] {
+  background: #079BCF;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  font-family: 'Raleway', sans-serif;
+  font-size: 27px;
+  height: 50px;
+  width: 100%;
+  margin-bottom: 10px;
+  overflow: hidden;
+  transition: all .3s cubic-bezier(.6,0,.4,1);
+}
+input span {
+  display: block;
+  line-height: 72px;
+  position: relative;
+  top: -2px;
+  transform: translate3d(0,0,0);
+}
+input:hover {
+  background: #007BA5;
+}
+
+welcome-image{
+  position: absolute;
+  left: 25%;
+  top: 35%;
+}
+
+/*#arrow {
+  height: 0;
+  width: 0;
+  border-bottom: 10px solid #fff;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  position: relative;
+  left: 32px;
+}
+
+
+#hint {
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  bottom: 20px;
+}*/
+
+.logo-img{
+  position: absolute;
+/*  text-align: center;*/
+  margin: 10px 200px 35px 100px;
+  padding: 10px 200px 50px 100px;
+  left: 15%;
+  top: 50%;
+}
+</style>
+
+<%= form_for(resource, as: resource_name, url: new_session_path(resource_name)) do |f| %>
+
+  <div class="welcome-image">
+    <%=image_tag("padharo_sa-removebg.png",size: "100x100")%>
+  </div>
+
+  <h2>Sign In</h2>
+
+  <%= render "devise/shared/error_messages", resource: resource %>
+
+  <div class="field">
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder:"E-mail" %>
+  </div>
+
+  <div class="field">
+    <%= f.password_field :password, autocomplete: "current-password", placeholder:"Password"  %>
+  </div>
+
+  <% if devise_mapping.rememberable? %>
+    <div class="field">
+      <%= f.check_box :remember_me %>
+      <%= f.label :remember_me %>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <span>
+      <%= f.submit "Sign In" %>
+    </span>
+  </div>
+
+  <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+    <%= link_to "Sign up", new_registration_path(resource_name) %><br />
+  <% end %>
+
+  <%= render "devise/shared/links" %>
+<% end %>
+

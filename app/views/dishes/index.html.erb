@@ -1,0 +1,42 @@
+<%# <% if current_user.type == 'Owner' %>
+  <h1><%= @restaurant.name %></h1>
+
+  <p>Status : <%= @restaurant.status %></p>
+  <p>Location : <%= @restaurant.location %></p>
+
+  <br>
+<%# <% end %>
+
+
+<h1>Dish List</h1>
+
+<table>
+
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Category</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @dishes.each do |dish| %>
+      <tr>
+
+        <td><%= link_to dish.name, restaurant_dish_path(@restaurant, dish) %></td>
+        <td><%= link_to dish.price, restaurant_dish_path(@restaurant, dish) %></td>
+        <td><%= link_to dish.category.name, restaurant_dish_path(@restaurant, dish) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+
+</table>
+
+<br>
+
+<%= link_to "Back", restaurants_path, class: 'btn btn-secondary' %>
+
+<% if current_user.type == 'Owner' %>
+  <%= link_to "Add Dishes", new_restaurant_dish_path(@restaurant) %>
+<% end %>

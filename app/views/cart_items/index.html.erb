@@ -1,0 +1,31 @@
+<h1>List of Cart items</h1>
+
+<table>
+
+  <thead>
+    <tr>
+      <th>Image</th>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Category</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @cart_items.each do |dish| %>
+      <% current_dish = Dish.find_by_id(dish.dish_id) %>
+        <tr>
+          <td>
+            <% if current_dish.image.present? %>
+              <%= image_tag(current_dish.image, width: 50) %><br>
+            <% end %>
+          </td>
+          <td><%= current_dish.name%></td>
+          <td><%= current_dish.price%></td>
+          <td><%= current_dish.category.name%></td>
+        </tr>
+    <% end %>
+  </tbody>
+
+</table>
+

@@ -1,0 +1,27 @@
+<h2>Add Category</h2>
+
+  <%= form_with(model: @category, local: true, data: { turbo: false }) do |f| %>
+
+    <div class="form-group">
+      <%= f.label :name, 'Category Name' %><br>
+      <%= f.text_field :name, class: 'form-control' %>
+      <% @category.errors.full_messages_for(:name).each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      <br>
+    </div>
+
+    <div class="row">
+      <div class="small-3 columns actions ">
+        <%= f.submit "Done", class: "btn btn-primary" %>
+      </div>
+    </div>
+
+  <% end %>
+
+
+<%= link_to "Back", restaurants_path, class: 'btn btn-secondary' %>
+
+<%- if user_signed_in? %>
+  <%= link_to "Sign Out", destroy_user_session_path, class: 'btn btn-danger' %> <br />
+<% end %>

@@ -1,0 +1,11 @@
+<h1> Your Profile </h1>
+<p>Name : <%= current_user.name %></p>
+<p>E-mail : <%= current_user.email %></p>
+<p>Mobile : <%= current_user.mobile %></p>
+<p>Address : <%= current_user.address %></p>
+<p>Password : <%= current_user.password %></p>
+<p>Type : <%= current_user.type %></p>
+
+<%= link_to "Back", restaurants_path %>
+<%= link_to "Edit Profile", edit_user_registration_path %>
+

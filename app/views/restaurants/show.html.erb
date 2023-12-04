@@ -1,0 +1,21 @@
+<h1><%= @restaurant.name %></h1>
+
+<table>
+  <tbody>
+    <% if @restaurant.image.present? %>
+      <%= image_tag(@restaurant.image,size: "100%") %><br>
+    <% end %>
+    <tr>Status : <%= @restaurant.status %></tr><br>
+    <tr>Location : <%= @restaurant.location %></tr><br>
+  </tbody>
+</table>
+
+
+
+<%= link_to "Back", restaurants_path, class: 'btn btn-secondary' %>
+
+<% if current_user.type == 'Owner' %>
+  <%= link_to "edit", edit_restaurant_path(@restaurant), class: 'btn btn-secondary' %>
+  <%= link_to "Destroy", @restaurant, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+<% end %>
+

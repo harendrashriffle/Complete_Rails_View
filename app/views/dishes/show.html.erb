@@ -1,0 +1,25 @@
+<h1><%= @dish.name %></h1>
+
+<table>
+  <tbody>
+    <% if @dish.image.present? %>
+      <%= image_tag(@dish.image, width: 100) %><br>
+    <% end %>
+    <tr>Price : <%= @dish.price %></tr><br>
+    <tr>Location : <%= @dish.restaurant.location %></tr><br>
+    <tr> Restaurant Name : <%= @dish.restaurant.name %></tr><br>
+  </tbody>
+</table>
+
+<%= link_to "Back", restaurant_dishes_path, class: 'btn btn-secondary' %>
+
+<% if current_user.type == 'Owner' %>
+  <%= link_to "edit", edit_restaurant_dish_path(@restaurant, @dish), class: 'btn btn-secondary' %>
+  <%= link_to "Destroy", restaurant_dish_path(@restaurant, @dish) , data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+<% end %>
+
+<% if current_user.type == 'Customer' %>
+  <div>
+    <a href="cart_items/new", method: :post><img src="https://as1.ftcdn.net/v2/jpg/01/97/42/26/1000_F_197422696_i5ryVwvLmxfpBj70IVG7dTGsSmtbLCAu.jpg" alt="Profile", width="100"></a>
+  </div>
+<% end %>

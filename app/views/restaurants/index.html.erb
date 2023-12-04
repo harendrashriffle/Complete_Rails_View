@@ -1,0 +1,133 @@
+<style>
+
+/* Add a black background color to the top navigation */
+.topnav {
+  background-color: #F4BF96;
+  overflow: hidden;
+  padding: 0px;
+  margin: 0px;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 14px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+  background-color: #04AA6D;
+  color: white;
+}
+
+<%# .topnav input[type=text] {
+  float: right;
+  padding: 6px;
+  border: none;
+  margin-top: 8px;
+  margin-right: 8px;
+  font-size: 17px;
+} %>
+
+.search input[type=text] {
+  float: right;
+  padding: 6px;
+  border: none;
+  margin-top: 12px;
+  margin-right: 100px;
+  font-size: 17px;
+  placeholder: "Search Restaurant";
+}
+
+.logout{
+  position: absolute;
+  margin-left: 950px;
+  margin-top: 0px;
+}
+
+img{
+  position: relative;
+  width:35px;
+  height:35px;
+  margin-top: 0px;
+}
+
+</style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div class="topnav">
+  <div>
+    <%# <a href="users"><img src="https://img.freepik.com/premium-vector/account-icon-user-icon-vector-graphics_292645-552.jpg?w=740" alt="Profile", width="35px"></a> %>
+    <%= link_to image_tag("profile.png", width: 35), users_path %>
+  </div>
+  <% if current_user.type == 'Owner' %>
+    <%= link_to "Add Restaurant", new_restaurant_path %>
+    <%= link_to "Create Category", new_category_path %>
+  <% end %>
+
+  <a href="restaurants">home</a>
+
+  <% if current_user.type == 'Customer' %>
+    <%= button_to "/carts#new", method: :post do%>
+      <div class="img">
+        <%= image_tag("cart.jpg")%>
+      </div>
+      <% end %>
+  <% end %>
+
+  <div class="search">
+    <%= form_tag(restaurants_path, method: :get) do %>
+      <%= text_field_tag(:name, params[:name]) %>
+    <% end %>
+  </div>
+
+  <div class="logout">
+    <%= link_to image_tag("logout.png", :border=>0), destroy_user_session_path, class: "button signout-button" %>
+  </div>
+
+</div>
+
+<h1>Restaurants List</h1>
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Status</th>
+      <th>Location</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+
+  <tbody>
+    <% @restaurants.each do |restaurant| %>
+      <tr>
+        <td><%= link_to restaurant.name, restaurant_dishes_path(restaurant) %></td>
+        <td><%= link_to restaurant.status, restaurant_path(restaurant) %></td>
+        <td><%= link_to restaurant.location, restaurant_path(restaurant) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%# <%= link_to "Sign out", destroy_user_session_path, class: "button signout-button" %>
+
+
+
+<%# <%= link_to "Profile", users_path %>
+

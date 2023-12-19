@@ -29,12 +29,16 @@ class RestaurantsController < ApplicationController
   end
 
   def show
-    @restaurant = if current_user.type == "Owner"
-                  selected_restaurant
-                else
-                  Restaurant.find_by(id: params[:id])
-                end
+    # @restaurant = if current_user.type == "Owner"
+    #               selected_restaurant
+    #             else
+    #               Restaurant.find_by(id: params[:id])
+    #             end
     # render json: {message: "Here is your choosen retaurant",data: restaurant}
+    @restaurant = selected_restaurant
+    @dishes = @restaurant.dishes
+
+
   end
 
   def edit
@@ -68,7 +72,9 @@ class RestaurantsController < ApplicationController
 
     def selected_restaurant
       # byebug
-      @restaurant = current_user.restaurants.find_by_id(params[:id])
+      @restaurant = Restaurant.all
+      @restaurant = current_user.restaurants if current_user.type == 'Owner'
+      @restaurant = @restaurant.find_by(id: params[:id])
       @restaurant.nil? ? "You have no such restaurant" : @restaurant
     end
 end

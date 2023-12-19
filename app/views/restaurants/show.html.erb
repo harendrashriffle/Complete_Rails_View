@@ -1,21 +1,80 @@
-<h1><%= @restaurant.name %></h1>
+<style>
 
-<table>
-  <tbody>
+    body {
+      padding-top: 60px;
+    }
+
+    h1 {
+      margin-top: 20px;
+    }
+    table {
+      margin-top: 20px;
+      width: 100%;
+    }
+    table tr {
+      line-height: 1.8;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin-bottom: 10px;
+    }
+  </style>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container-fluid">
+      <%= link_to "Back", restaurants_path, class: 'btn btn-secondary me-2' %>
+      <% if current_user.type == 'Owner' %>
+        <%= link_to "Edit", edit_restaurant_path(@restaurant), class: 'btn btn-secondary me-2' %>
+        <%= link_to "Destroy", @restaurant, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: 'btn btn-secondary me-2', method: :delete %>
+      <% end %>
+    </div>
+  </nav>
+
+  <div class="container mt-4">
+    <h1><%= @restaurant.name %></h1>
+
     <% if @restaurant.image.present? %>
-      <%= image_tag(@restaurant.image,size: "100%") %><br>
+      <%= image_tag(@restaurant.image, class: 'img-fluid') %>
     <% end %>
-    <tr>Status : <%= @restaurant.status %></tr><br>
-    <tr>Location : <%= @restaurant.location %></tr><br>
-  </tbody>
-</table>
+
+    <table>
+      <tbody>
+        <tr>
+          <td>Status:</td>
+          <td><%= @restaurant.status %></td>
+        </tr>
+        <tr>
+          <td>Location:</td>
+          <td><%= @restaurant.location %></td>
+        </tr>
+      </tbody>
+    </table>
 
 
 
-<%= link_to "Back", restaurants_path, class: 'btn btn-secondary' %>
 
-<% if current_user.type == 'Owner' %>
-  <%= link_to "edit", edit_restaurant_path(@restaurant), class: 'btn btn-secondary' %>
-  <%= link_to "Destroy", @restaurant, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
-<% end %>
-
+    <h2>Dishes</h2>
+    <% if @dishes.any? %>
+      <div class="row">
+        <% @dishes.each do |dish| %>
+          <div class="col-md-3 mb-4">
+            <div class="card">
+              <% if dish.image.present? %>
+                <%= image_tag(dish.image, class: 'card-img-top img-fluid') %>
+              <% end %>
+              <div class="card-body">
+                <h5 class="card-title"><%= dish.name %></h5>
+                <p class="card-text">Price: <%= number_to_currency(dish.price) %></p>
+                <%= link_to "View Details", restaurant_dish_path(@restaurant, dish), class: 'btn btn-primary' %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p>No dishes added yet.</p>
+    <% end %>
+  </div>

@@ -1,73 +1,62 @@
-<style >
+<%= form_for(resource, as: resource_name, url: user_registration_path(resource_name), html: { method: :put, class: "mt-5" }) do |f| %>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="text-center mb-4">
+          <%= image_tag("padharo_sa-removebg.png", size: "100x100", class: "mb-3") %>
+          <h2>Edit Profile</h2>
+        </div>
 
-welcome-image{
-  position: absolute;
-  left: 25%;
-  top: 35%;
-}
+        <%= render "devise/shared/error_messages", resource: resource %>
 
-</style>
+        <div class="form-group">
+          <%= f.text_field :name, autofocus: true, autocomplete: "name", placeholder: "Name", class: "form-control" %>
+        </div>
 
+        <div class="form-group">
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "E-mail", class: "form-control" %>
+        </div>
 
-<%= form_for(resource, as: resource_name, url: user_registration_path(resource_name), html: { method: :put }) do |f| %>
+        <div class="form-group">
+          <%= f.text_field :mobile, autofocus: true, autocomplete: "mobile", placeholder: "Mobile", class: "form-control" %>
+        </div>
 
-  <div class = "welcome-image">
-    <%=image_tag("padharo_sa-removebg.png",size: "100x100")%>
+        <div class="form-group">
+          <%= f.text_field :address, autofocus: true, autocomplete: "address", placeholder: "Address", class: "form-control" %>
+        </div>
+
+        <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+          <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+        <% end %>
+
+        <div class="form-group">
+          <%= f.password_field :password, autocomplete: "new-password", placeholder: "New Password", class: "form-control" %>
+          <% if @minimum_password_length %>
+            <br />
+            <em><%= @minimum_password_length %> characters minimum</em>
+          <% end %>
+        </div>
+
+        <div class="form-group">
+          <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Password Confirmation", class: "form-control" %>
+        </div>
+
+        <div class="form-group">
+          <%= f.password_field :current_password, autocomplete: "current-password", placeholder: "Current Password", class: "form-control" %>
+        </div>
+        <br>
+        <div class="text-center">
+          <%= f.submit "Update", class: "btn btn-primary btn-block" %>
+          <div>
+            <%= link_to "Cancel Update", users_path, class: "btn btn-secondary mt-3" %>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <h2>Edit Profile</h2>
-
-  <%= render "devise/shared/error_messages", resource: resource %>
-
-  <div class="field">
-    <%= f.text_field :name, autofocus: true, autocomplete: "name", placeholder:"Name" %>
-  </div>
-
-  <div class="field">
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" , placeholder: "E-mail"%>
-  </div>
-
-  <div class="field">
-    <%= f.text_field :mobile, autofocus: true, autocomplete: "mobile", placeholder:"Mobile" %>
-  </div>
-
-  <div class="field">
-    <%= f.text_field :address, autofocus: true, autocomplete: "address", placeholder:"Address" %>
-  </div>
-
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-  <% end %>
-
-  <div class="field">
-    <%= f.password_field :password, autocomplete: "new-password", placeholder: "New-password" %>
-    <% if @minimum_password_length %>
-      <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
-    <% end %>
-  </div>
-
-  <div class="field">
-    <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Password Confirmation" %>
-  </div>
-
-  <div class="field">
-    <%= f.password_field :current_password, autocomplete: "current-password", placeholder: "Current Password"%>
-  </div>
-
-
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
-
-
 <% end %>
 
-<h3>Delete my account</h3>
-
-<div>
-  <%= link_to "Delete my account", users_path, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
-  <div>
-    <%= link_to "Cancel Update", users_path %>
-  </div>
+<div class="text-center mt-4">
+  <h3>Delete my account</h3>
+  <%= link_to "Delete my account", users_path, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-danger" %>
 </div>
